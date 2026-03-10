@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EGGQOR — Japanese-StyleEgg Sandwich</title>
+   <!-- FAVICON using your EGGQOR logo -->
+   <link rel="icon" type="image/png" href="Eggcor.png" />
+   <link rel="apple-touch-icon" href="Eggcor.png" />
+ 
+   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #faf8f3;
+      --ink: #1a1612;
+      --charcoal: #2d2926;
+      --gold: #c9a84c;
+      --gold-light: #e8d5a3;
+      --rust: #b85c38;
+      --moss: #5c6b4a;
+      --mist: #d4cfc5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+      width: 12px; height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s, height 0.3s;
+    }
+    body:hover .cursor { opacity: 1; }
+
+    /* Grain Overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9997;
+      opacity: 0.5;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: multiply;
+    }
+    .nav-logo {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 22px;
+      letter-spacing: 0.3em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    .nav-logo span {
+      font-size: 11px;
+      display: block;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-weight: 300;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 64px 80px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-kana {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 120px;
+      line-height: 1;
+      color: var(--gold-light);
+      opacity: 0.4;
+      position: absolute;
+      top: 80px; left: 48px;
+      writing-mode: vertical-rl;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      animation: fadeUp 1.5s ease forwards;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      animation: fadeUp 1s ease 0.2s both;
+    }
+    .hero-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: clamp(64px, 7vw, 96px);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      animation: fadeUp 1s ease 0.4s both;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      margin-top: 24px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--charcoal);
+      max-width: 340px;
+      font-weight: 300;
+      animation: fadeUp 1s ease 0.6s both;
+    }
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      animation: fadeUp 1s ease 0.8s both;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      padding: 16px 40px;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: none;
+      transition: background 0.3s, transform 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+    .btn-ghost {
+      color: var(--charcoal);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s;
+    }
+    .btn-ghost:hover { color: var(--gold); }
+    .btn-ghost::after {
+      content: '→';
+      transition: transform 0.3s;
+    }
+    .btn-ghost:hover::after { transform: translateX(4px); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--warm-white);
+    }
+    .hero-image-container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* SVG Sandwich Illustration */
+    .sandwich-svg {
+      width: 70%;
+      max-width: 440px;
+      filter: drop-shadow(0 30px 60px rgba(26,22,18,0.15));
+      animation: floatSandwich 6s ease-in-out infinite;
+      transform-origin: center;
+    }
+    @keyframes floatSandwich {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-16px) rotate(2deg); }
+    }
+
+    .hero-right-decor {
+      position: absolute;
+      bottom: 40px; right: 40px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 13px;
+      writing-mode: vertical-rl;
+      letter-spacing: 0.3em;
+      color: var(--mist);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--mist);
+      text-transform: uppercase;
+      animation: fadeUp 1s ease 1.2s both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* DIVIDER */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      gap: 24px;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--mist); }
+    .divider-mark {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 18px;
+      color: var(--gold);
+    }
+
+    /* INGREDIENTS */
+    .ingredients {
+      padding: 80px 80px 100px;
+      position: relative;
+    }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: clamp(36px, 4vw, 52px);
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 60px;
+    }
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .ingredient-card {
+      background: var(--warm-white);
+      padding: 40px 32px;
+      transition: transform 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+    .ingredient-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .ingredient-card:hover::before { transform: scaleX(1); }
+    .ingredient-card:hover { transform: translateY(-4px); background: white; }
+    .ingredient-num {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 48px;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .ingredient-name {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 20px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .ingredient-jp {
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+    .ingredient-desc {
+      font-size: 13px;
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* PROCESS */
+    .process {
+      background: var(--ink);
+      color: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+    }
+    .process-left {
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .process-left .section-label { color: var(--gold); }
+    .process-left .section-title { color: var(--cream); margin-bottom: 48px; }
+    .steps { display: flex; flex-direction: column; gap: 32px; }
+    .step { display: flex; gap: 24px; align-items: flex-start; }
+    .step-num {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 36px;
+      color: var(--gold);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 48px;
+    }
+    .step-content h3 {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: var(--cream);
+    }
+    .step-content p {
+      font-size: 13px;
+      color: var(--mist);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .process-right {
+      background: #211e1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .process-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(201,168,76,0.08) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          rgba(201,168,76,0.08) 40px
+        );
+    }
+    .process-quote {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 60px;
+    }
+    .process-quote-mark {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 100px;
+      color: var(--gold);
+      opacity: 0.3;
+      line-height: 0.7;
+      display: block;
+      margin-bottom: 24px;
+    }
+    .process-quote p {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 22px;
+      line-height: 1.6;
+      color: var(--cream);
+      font-style: italic;
+    }
+    .process-quote cite {
+      display: block;
+      margin-top: 24px;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      font-style: normal;
+      text-transform: uppercase;
+    }
+
+    /* MENU */
+    .menu {
+      padding: 100px 80px;
+      background: var(--warm-white);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .menu-card {
+      background: var(--cream);
+      overflow: hidden;
+      transition: transform 0.3s;
+      cursor: none;
+    }
+    .menu-card:hover { transform: translateY(-8px); }
+    .menu-card-img {
+      height: 260px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-card-img svg {
+      width: 60%;
+      transition: transform 0.4s ease;
+    }
+    .menu-card:hover .menu-card-img svg { transform: scale(1.05); }
+    .menu-card-body { padding: 32px; }
+    .menu-card-tag {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .menu-card-name {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 24px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .menu-card-jp {
+      font-size: 12px;
+      color: var(--mist);
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+    .menu-card-desc {
+      font-size: 13px;
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+    .menu-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu-card-price {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 28px;
+      color: var(--ink);
+    }
+    .menu-card-price span {
+      font-size: 13px;
+      color: var(--mist);
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+    }
+    .btn-add {
+      width: 44px; height: 44px;
+      border: 1px solid var(--ink);
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      cursor: none;
+      transition: background 0.3s, color 0.3s;
+      color: var(--ink);
+    }
+    .btn-add:hover { background: var(--ink); color: var(--cream); }
+
+   /* SECRET CARD*/
+
+   .secret-card .secret-overlay {
+          position:absolute; inset:0; z-index:10;
+          background: rgba(26,22,18,0.82);
+          backdrop-filter: blur(6px);
+          display:flex; flex-direction:column;
+          align-items:center; justify-content:center;
+          gap:12px;
+          transition: background 0.4s;
+        }
+        .secret-card:hover .secret-overlay { background: rgba(26,22,18,0.72); }
+        .lock-icon { font-size: 36px; animation: pulse-lock 2.5s ease-in-out infinite; }
+        @keyframes pulse-lock {
+          0%,100% { transform: scale(1) rotate(-4deg); }
+          50% { transform: scale(1.12) rotate(4deg); }
+        }
+        .secret-label {
+          font-family: 'Shippori Mincho', serif;
+          font-size: 20px; color: var(--gold);
+          letter-spacing: 0.2em;
+        }
+        .secret-sublabel {
+          font-size: 10px; letter-spacing: 0.4em;
+          text-transform: uppercase; color: var(--mist);
+        }
+        .secret-kana {
+          font-family: 'Shippori Mincho', serif;
+          font-size: 13px; color: rgba(201,168,76,0.5);
+          letter-spacing: 0.3em;
+        }
+        .coming-soon-card {
+          border: 2px dashed var(--mist);
+          background: var(--warm-white) !important;
+          position: relative;
+          overflow: hidden;
+        }
+        .coming-soon-card .cs-bg {
+          position:absolute; inset:0;
+          background-image: repeating-linear-gradient(
+            45deg, transparent, transparent 18px,
+            rgba(201,168,76,0.04) 18px, rgba(201,168,76,0.04) 19px
+          );
+          pointer-events:none;
+        }
+        .cs-soon-badge {
+          font-family: 'Shippori Mincho', serif;
+          font-size: 11px; letter-spacing: 0.5em;
+          text-transform: uppercase;
+          background: var(--ink); color: var(--gold);
+          padding: 6px 18px;
+        }
+        .cs-question {
+          font-family: 'Shippori Mincho', serif;
+          font-size: 72px; color: var(--mist);
+          line-height: 1;
+          animation: floatQ 4s ease-in-out infinite;
+        }
+        @keyframes floatQ {
+          0%,100% { transform: translateY(0); opacity: 0.5; }
+          50% { transform: translateY(-8px); opacity: 0.9; }
+        }
+        .cs-jp { font-size: 11px; letter-spacing: 0.3em; color: var(--mist); font-family: 'Shippori Mincho', serif; }
+        .cs-name { font-family: 'Shippori Mincho', serif; font-size: 24px; color: var(--charcoal); }
+        .cs-desc { font-size: 13px; color: var(--mist); line-height:1.7; font-weight:300; margin-bottom:24px; }
+        .notify-btn {
+          width: 100%;
+          background: transparent;
+          border: 1px solid var(--ink);
+          padding: 13px;
+          font-family: 'Zen Kaku Gothic New', sans-serif;
+          font-size: 11px; letter-spacing: 0.3em;
+          text-transform: uppercase;
+          cursor: none;
+          color: var(--ink);
+          transition: background 0.3s, color 0.3s;
+        }
+        .notify-btn:hover { background: var(--ink); color: var(--cream); }
+        .notify-btn.notified { background: var(--moss); color: white; border-color: var(--moss); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+    }
+    .footer-brand h2 {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 36px;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .footer-brand h2 em { color: var(--gold); font-style: normal; }
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--mist);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 300px;
+      margin-top: 16px;
+    }
+    .footer-col h4 {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul li a {
+      text-decoration: none;
+      color: var(--mist);
+      font-size: 13px;
+      font-weight: 300;
+      transition: color 0.3s;
+      letter-spacing: 0.05em;
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      background: #111;
+      padding: 20px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom p { font-size: 11px; color: #555; letter-spacing: 0.1em; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ABOUT US */
+.about {
+  padding: 120px 80px;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.about::before {
+  content: '私たちについて';
+  position: absolute;
+  top: 60px; right: -20px;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 80px;
+  color: var(--gold-light);
+  opacity: 0.2;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.1em;
+  pointer-events: none;
+}
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+.about-left { position: relative; }
+.about-img-frame {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--warm-white);
+  position: relative;
+  overflow: hidden;
+}
+.about-img-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--gold-light);
+  margin: 16px;
+  pointer-events: none;
+  z-index: 2;
+}
+.about-portrait-svg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.about-img-caption {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 20px 28px;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 14px;
+  line-height: 1.8;
+  z-index: 3;
+}
+.about-img-caption span {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+.about-right { padding-right: 40px; }
+.about-right .section-label { margin-bottom: 16px; }
+.about-right .section-title { margin-bottom: 32px; }
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.about-body p {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--charcoal);
+  font-weight: 300;
+}
+.about-body p strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 48px;
+}
+.about-stat {
+  background: var(--warm-white);
+  padding: 28px 24px;
+  text-align: center;
+}
+.about-stat-num {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 42px;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.about-stat-num em {
+  font-style: normal;
+  color: var(--gold);
+  font-size: 28px;
+}
+.about-stat-label {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+.about-values {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--mist);
+}
+.about-value {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--mist);
+  cursor: none;
+  transition: padding-left 0.3s;
+}
+.about-value:hover { padding-left: 8px; }
+.about-value-icon {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 20px;
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.about-value-text h4 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.about-value-text p {
+  font-size: 13px;
+  color: var(--charcoal);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { height: 50vh; }
+      .ingredients-grid { grid-template-columns: repeat(2, 1fr); }
+      .process { grid-template-columns: 1fr; }
+      .menu-grid { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero-left { padding: 100px 24px 60px; }
+      .ingredients, .menu { padding: 60px 24px; }
+      .about-inner { grid-template-columns: 1fr; gap: 60px; }
+      .about-right { padding-right: 0; }
+      .about-img-caption { right: 0; bottom: -16px; }
+      .about { padding: 60px 24px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+     EGGQOR
+      <span>卵サンド · Since 2026</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#craft">Our Craft</a></li>
+      <li><a href="#ingredients">Ingredients</a></li>
+      <li><a href="#order">Order</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-kana">たまご</div>
+      <p class="hero-eyebrow">Laguna · Est. 2026</p>
+      <h1 class="hero-title">The Art of<br>the <em>Perfect</em><br>Egg Sandwich</h1>
+      <p class="hero-sub">Crafted with free-range Tamago eggs, Japanese Kewpie mayo, and toasted buttered bread fresh each morning. A simple pleasure, perfected.</p>
+      <div class="hero-cta">
+        <a href="#order" class="btn-primary">Order Now</a>
+        <a href="#menu" class="btn-ghost">View Menu</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-image-container">
+        <!-- SVG Sandwich Illustration -->
+        <svg class="sandwich-svg" viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Shadow -->
+          <ellipse cx="200" cy="300" rx="140" ry="18" fill="rgba(26,22,18,0.08)"/>
+          <!-- Bottom bread -->
+          <rect x="40" y="240" width="320" height="50" rx="10" fill="#e8d5a3"/>
+          <rect x="40" y="240" width="320" height="18" rx="8" fill="#d4b87a"/>
+          <rect x="50" y="258" width="300" height="32" rx="6" fill="#c9a84c" opacity="0.4"/>
+          <!-- Egg filling -->
+          <rect x="48" y="190" width="304" height="55" rx="6" fill="#fef3c7"/>
+          <!-- Egg whites blobs -->
+          <ellipse cx="130" cy="215" rx="55" ry="28" fill="white" opacity="0.9"/>
+          <ellipse cx="200" cy="210" rx="60" ry="30" fill="white" opacity="0.95"/>
+          <ellipse cx="275" cy="217" rx="50" ry="26" fill="white" opacity="0.9"/>
+          <!-- Yolks -->
+          <circle cx="130" cy="212" r="18" fill="#f59e0b"/>
+          <circle cx="130" cy="212" r="14" fill="#fbbf24"/>
+          <circle cx="126" cy="208" r="4" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="200" cy="208" r="20" fill="#f59e0b"/>
+          <circle cx="200" cy="208" r="15" fill="#fbbf24"/>
+          <circle cx="196" cy="204" r="4" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="270" cy="213" r="16" fill="#f59e0b"/>
+          <circle cx="270" cy="213" r="12" fill="#fbbf24"/>
+          <circle cx="266" cy="209" r="3" fill="rgba(255,255,255,0.5)"/>
+          <!-- Mayo drizzle -->
+          <path d="M80 192 Q100 185 120 192 Q140 185 160 192" stroke="white" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
+          <path d="M220 190 Q240 183 260 190 Q280 183 310 190" stroke="white" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
+          <!-- Top bread -->
+          <rect x="40" y="130" width="320" height="65" rx="10" fill="#e8d5a3"/>
+          <rect x="38" y="126" width="324" height="20" rx="12" fill="#d4b87a"/>
+          <rect x="44" y="120" width="312" height="22" rx="14" fill="#c9a84c" opacity="0.5"/>
+          <!-- Sesame seeds -->
+          <ellipse cx="130" cy="128" rx="4" ry="2" fill="rgba(139,100,50,0.5)" transform="rotate(-20 130 128)"/>
+          <ellipse cx="165" cy="123" rx="4" ry="2" fill="rgba(139,100,50,0.5)" transform="rotate(10 165 123)"/>
+          <ellipse cx="200" cy="121" rx="4" ry="2" fill="rgba(139,100,50,0.5)" transform="rotate(-5 200 121)"/>
+          <ellipse cx="235" cy="124" rx="4" ry="2" fill="rgba(139,100,50,0.5)" transform="rotate(15 235 124)"/>
+          <ellipse cx="268" cy="127" rx="4" ry="2" fill="rgba(139,100,50,0.5)" transform="rotate(-10 268 127)"/>
+          <!-- Decorative cut line -->
+          <line x1="200" y1="125" x2="200" y2="295" stroke="rgba(26,22,18,0.15)" stroke-width="1" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+      <div class="hero-right-decor">手作り · 毎朝新鮮</div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">✦</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- INGREDIENTS -->
+  <section class="ingredients" id="ingredients">
+    <p class="section-label reveal">What's inside</p>
+    <h2 class="section-title reveal">Ten ingredients.<br>Zero compromise.</h2>
+    <div class="ingredients-grid">
+      <div class="ingredient-card reveal">
+        <div class="ingredient-num">01</div>
+        <div class="ingredient-name">Toasted Buttered Bread</div>
+        <div class="ingredient-jp">トーストしたバター付きパン</div>
+      </div>
+      <div class="ingredient-card reveal" style="transition-delay:0.1s">
+        <div class="ingredient-num">02</div>
+        <div class="ingredient-name">Tamago Egg</div>
+        <div class="ingredient-jp">たまご</div>
+      </div>
+      <div class="ingredient-card reveal" style="transition-delay:0.2s">
+        <div class="ingredient-num">03</div>
+        <div class="ingredient-name">Kewpie Mayo</div>
+        <div class="ingredient-jp">マヨネーズ</div>
+      </div>
+      <div class="ingredient-card reveal" style="transition-delay:0.3s">
+        <div class="ingredient-num">04</div>
+        <div class="ingredient-name">Parsely</div>
+        <div class="ingredient-jp">パセリ</div>
+      </div>
+      <div class="ingredient-card reveal">
+        <div class="ingredient-num">05</div>
+        <div class="ingredient-name">Black Pepper Powder</div>
+        <div class="ingredient-jp">黒コショウパウダー</div>
+      </div>
+      <div class="ingredient-card reveal">
+        <div class="ingredient-num">06</div>
+        <div class="ingredient-name">Lettuce</div>
+        <div class="ingredient-jp">レタス</div>
+      </div>
+      <div class="ingredient-card reveal">
+        <div class="ingredient-num">07</div>
+        <div class="ingredient-name">Tomato</div>
+        <div class="ingredient-jp">トマト</div>
+      </div>
+      <div class="ingredient-card reveal">
+        <div class="ingredient-num">08</div>
+        <div class="ingredient-name">Cheese</div>
+        <div class="ingredient-jp">チーズ</div>
+      </div>
+      <div class="ingredient-card reveal">
+        <div class="ingredient-num">09</div>
+        <div class="ingredient-name">Mustard</div>
+        <div class="ingredient-jp">マスタード</div>
+      </div>
+    
+      <div class="ingredient-card reveal">
+        <div class="ingredient-num">10</div>
+        <div class="ingredient-name">Cucumber</div>
+        <div class="ingredient-jp">キュウリ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="craft">
+    <div class="process-left">
+      <p class="section-label">Our process</p>
+      <h2 class="section-title">Crafted with<br>intention.</h2>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num">一</div>
+          <div class="step-content">
+            <h3>The Bread</h3>
+            <p>Bread is toasted in butter in margarine for unmatched softness</p>
+          </div>
+        </div>
+        <div class="step reveal" style="transition-delay:0.1s">
+          <div class="step-num">二</div>
+          <div class="step-content">
+            <h3>The Egg</h3>
+            <p>Eggs are soft-boiled for exactly 7 minutes, then cooled in an ice bath. Folded gently with Kewpie mayo — never over-mixed.</p>
+          </div>
+        </div>
+        <div class="step reveal" style="transition-delay:0.2s">
+          <div class="step-num">三</div>
+          <div class="step-content">
+            <h3>The Assembly</h3>
+            <p>Crusts removed. Filling spread edge-to-edge. Cut diagonally with a single clean motion. Wrapped in washi paper and served immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-right">
+      <div class="process-pattern"></div>
+      <div class="process-quote">
+        <span class="process-quote-mark">"</span>
+        <p>Simplicity is the ultimate sophistication. In every tamago sando, we pursue perfection through restraint.</p>
+        <cite>— Eggcor Team</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <p class="section-label reveal">The menu</p>
+    <h2 class="section-title reveal">Choose your sando.</h2>
+    <div class="menu-grid" id="order">
+
+      <div class="menu-card reveal">
+        <div class="menu-card-img" style="background:#fef9f0;">
+          <svg viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="140" cy="185" rx="110" ry="12" fill="rgba(26,22,18,0.06)"/>
+            <rect x="30" y="148" width="220" height="36" rx="8" fill="#e8d5a3"/>
+            <rect x="30" y="148" width="220" height="14" rx="6" fill="#d4b87a"/>
+            <rect x="36" y="118" width="208" height="34" rx="4" fill="#fef3c7"/>
+            <ellipse cx="100" cy="132" rx="36" ry="18" fill="white" opacity="0.9"/>
+            <ellipse cx="140" cy="129" rx="40" ry="20" fill="white"/>
+            <ellipse cx="182" cy="133" rx="34" ry="17" fill="white" opacity="0.9"/>
+            <circle cx="100" cy="129" r="12" fill="#f59e0b"/>
+            <circle cx="100" cy="129" r="9" fill="#fbbf24"/>
+            <circle cx="140" cy="126" r="14" fill="#f59e0b"/>
+            <circle cx="140" cy="126" r="10" fill="#fbbf24"/>
+            <circle cx="182" cy="130" r="11" fill="#f59e0b"/>
+            <circle cx="182" cy="130" r="8" fill="#fbbf24"/>
+            <rect x="28" y="76" width="224" height="46" rx="8" fill="#e8d5a3"/>
+            <rect x="26" y="72" width="228" height="16" rx="10" fill="#d4b87a"/>
+            <rect x="32" y="66" width="216" height="16" rx="10" fill="#c9a84c" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="menu-card-body">
+          <p class="menu-card-tag">Classic</p>
+          <h3 class="menu-card-name">Original Tamago</h3>
+          <p class="menu-card-jp">オリジナルたまご</p>
+          <p class="menu-card-desc">Our signature. Soft-boiled eggs, Kewpie mayo, Parsely, and Black Pepper Powder. Served on buttered bread. Pure, simple, perfect.</p>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₱25 <span>/ sando</span></div>
+            <button class="btn-add">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" style="transition-delay:0.15s">
+        <div class="menu-card-img" style="background:#f0f4f0;">
+          <svg viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="140" cy="185" rx="110" ry="12" fill="rgba(26,22,18,0.06)"/>
+            <rect x="30" y="148" width="220" height="36" rx="8" fill="#e8d5a3"/>
+            <rect x="30" y="148" width="220" height="14" rx="6" fill="#d4b87a"/>
+            <rect x="36" y="115" width="208" height="38" rx="4" fill="#d4edda"/>
+            <rect x="42" y="120" width="196" height="6" rx="2" fill="#7ab890" opacity="0.6"/>
+            <rect x="42" y="130" width="196" height="6" rx="2" fill="#7ab890" opacity="0.5"/>
+            <rect x="42" y="140" width="196" height="6" rx="2" fill="#7ab890" opacity="0.4"/>
+            <rect x="36" y="103" width="208" height="16" rx="3" fill="#fef3c7"/>
+            <ellipse cx="100" cy="110" rx="36" ry="9" fill="white" opacity="0.8"/>
+            <ellipse cx="140" cy="108" rx="40" ry="10" fill="white"/>
+            <ellipse cx="182" cy="111" rx="34" ry="9" fill="white" opacity="0.8"/>
+            <circle cx="140" cy="107" r="12" fill="#f59e0b"/>
+            <circle cx="140" cy="107" r="8" fill="#fbbf24"/>
+            <rect x="28" y="64" width="224" height="42" rx="8" fill="#e8d5a3"/>
+            <rect x="26" y="60" width="228" height="16" rx="10" fill="#d4b87a"/>
+            <rect x="32" y="54" width="216" height="16" rx="10" fill="#c9a84c" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="menu-card-body">
+          <p class="menu-card-tag">Garden</p>
+          <h3 class="menu-card-name">Tamago & Greens</h3>
+          <p class="menu-card-jp">たまごと野菜</p>
+          <p class="menu-card-desc">Original tamago with a layer of crisp lettuce and cucumber ribbons. Finished with a touch of yuzu zest for bright, fresh notes.</p>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₱30 <span>/ sando</span></div>
+            <button class="btn-add">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card reveal" style="transition-delay:0.3s">
+        <div class="menu-card-img" style="background:#fdf0ec;">
+          <svg viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="140" cy="185" rx="110" ry="12" fill="rgba(26,22,18,0.06)"/>
+            <rect x="30" y="148" width="220" height="36" rx="8" fill="#e8d5a3"/>
+            <rect x="30" y="148" width="220" height="14" rx="6" fill="#d4b87a"/>
+            <rect x="36" y="115" width="208" height="36" rx="4" fill="#fce8df"/>
+            <path d="M50 122 Q80 115 110 122 Q140 115 170 122 Q200 115 230 122" stroke="#e8a090" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <path d="M50 132 Q80 125 110 132 Q140 125 170 132 Q200 125 230 132" stroke="#e8a090" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.6"/>
+            <rect x="36" y="100" width="208" height="18" rx="3" fill="#fef3c7"/>
+            <ellipse cx="100" cy="108" rx="36" ry="10" fill="white" opacity="0.8"/>
+            <ellipse cx="140" cy="106" rx="40" ry="11" fill="white"/>
+            <ellipse cx="182" cy="109" rx="34" ry="10" fill="white" opacity="0.8"/>
+            <circle cx="140" cy="105" r="13" fill="#f59e0b"/>
+            <circle cx="140" cy="105" r="9" fill="#fbbf24"/>
+            <rect x="28" y="62" width="224" height="42" rx="8" fill="#e8d5a3"/>
+            <rect x="26" y="58" width="228" height="16" rx="10" fill="#d4b87a"/>
+            <rect x="32" y="52" width="216" height="16" rx="10" fill="#c9a84c" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="menu-card-body">
+          <p class="menu-card-tag">Premium</p>
+          <h3 class="menu-card-name">Overload Tamago</h3>
+          <p class="menu-card-jp">オーバーロードたまご</p>
+          <p class="menu-card-desc">Our premium dedition. Classic tamago with Japanese mustard swirled into the filling, lettuce, cheese, and tomato. A subtle, that lingers.</p>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₱40 <span>/ sando</span></div>
+            <button class="btn-add">+</button>
+          </div>
+        </div>
+      </div>
+
+      
+    <!-- COMING SOON — NEW MENU -->
+    <div class="menu-card coming-soon-card reveal" style="transition-delay:0.25s;">
+      <div class="cs-bg"></div>
+      <div class="menu-card-img" style="height:260px; background:transparent; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;">
+        <div class="cs-question">？</div>
+        <div class="cs-soon-badge">Coming Soon</div>
+        <div class="cs-jp">近日公開</div>
+      </div>
+      <div class="menu-card-body" style="position:relative; z-index:1;">
+        <p class="menu-card-tag">New Menu</p>
+        <h3 class="cs-name">Something New</h3>
+        <p class="menu-card-jp" style="color:var(--mist);">新しいメニュー</p>
+        <p class="cs-desc">We're crafting something entirely new. A new chapter for Tamago — beyond the sando. Stay close.</p>
+        <button class="notify-btn" id="notifyBtn">Notify Me · お知らせ</button>
+      </div>
+    </div>
+
+    <!-- COMING SOON — SEASONAL -->
+    <div class="menu-card coming-soon-card reveal" style="transition-delay:0.4s;">
+      <div class="cs-bg"></div>
+      <div class="menu-card-img" style="height:260px; background:transparent; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;">
+        <div class="cs-question" style="font-size:60px; color:#c9a84c; opacity:0.4;">季</div>
+        <div class="cs-soon-badge">Seasonal · 季節限定</div>
+        <div class="cs-jp">近日公開</div>
+      </div>
+      <div class="menu-card-body" style="position:relative; z-index:1;">
+        <p class="menu-card-tag">Limited Edition</p>
+        <h3 class="cs-name">Seasonal Drop</h3>
+        <p class="menu-card-jp" style="color:var(--mist);">季節のサンド</p>
+        <p class="cs-desc">A limited seasonal sando, crafted around what's freshest right now. Available for one week only when it arrives.</p>
+        <button class="notify-btn" id="notifyBtn2">Notify Me · お知らせ</button>
+      </div>
+    </div>
+    </div>
+  </section>
+  <script>
+    ['notifyBtn','notifyBtn2'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener('click', function() {
+        this.textContent = '✓ We\'ll let you know · ありがとう';
+        this.classList.add('notified');
+        this.disabled = true;
+      });
+    });
+  </script>
+
+  <!-- ABOUT US -->
+<section class="about" id="about">
+  <div class="about-inner">
+
+    <div class="about-left reveal">
+      <div class="about-img-frame">
+        <div class="about-portrait-svg">
+          <!-- Illustrated portrait / shop scene SVG -->
+          <svg viewBox="0 0 360 480" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <!-- Background warm wash -->
+            <rect width="360" height="480" fill="#faf8f3"/>
+            <!-- Window light -->
+            <rect x="60" y="0" width="240" height="180" fill="#fff9ee" opacity="0.6"/>
+            <line x1="180" y1="0" x2="180" y2="180" stroke="#e8d5a3" stroke-width="1.5"/>
+            <line x1="60" y1="90" x2="300" y2="90" stroke="#e8d5a3" stroke-width="1.5"/>
+            <!-- Counter -->
+            <rect x="0" y="330" width="360" height="150" fill="#e8d5a3"/>
+            <rect x="0" y="330" width="360" height="12" fill="#d4b87a"/>
+            <!-- Wooden stool -->
+            <rect x="240" y="280" width="80" height="8" rx="2" fill="#c9a84c" opacity="0.6"/>
+            <rect x="252" y="288" width="8" height="50" rx="2" fill="#c9a84c" opacity="0.5"/>
+            <rect x="300" y="288" width="8" height="50" rx="2" fill="#c9a84c" opacity="0.5"/>
+            <!-- Chef figure - body -->
+            <rect x="130" y="240" width="100" height="90" rx="6" fill="#2d2926"/>
+            <!-- Chef apron -->
+            <path d="M145 250 L180 265 L215 250 L215 330 L145 330 Z" fill="var(--cream)" opacity="0.9"/>
+            <!-- Chef head -->
+            <ellipse cx="180" cy="215" rx="38" ry="40" fill="#f5deb3"/>
+            <!-- Chef toque hat -->
+            <rect x="148" y="160" width="64" height="36" rx="20" fill="white"/>
+            <rect x="142" y="190" width="76" height="12" rx="3" fill="#e8e0d4"/>
+            <!-- Eyes -->
+            <ellipse cx="168" cy="212" rx="4" ry="5" fill="#2d2926"/>
+            <ellipse cx="192" cy="212" rx="4" ry="5" fill="#2d2926"/>
+            <circle cx="169" cy="210" r="1.5" fill="white"/>
+            <circle cx="193" cy="210" r="1.5" fill="white"/>
+            <!-- Smile -->
+            <path d="M170 225 Q180 233 190 225" stroke="#2d2926" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- Arms -->
+            <rect x="88" y="248" width="44" height="16" rx="8" fill="#2d2926"/>
+            <rect x="228" y="248" width="44" height="16" rx="8" fill="#2d2926"/>
+            <!-- Hands holding sandwich -->
+            <ellipse cx="86" cy="256" rx="12" ry="10" fill="#f5deb3"/>
+            <ellipse cx="274" cy="256" rx="12" ry="10" fill="#f5deb3"/>
+            <!-- Mini sandwich in hands -->
+            <rect x="100" y="248" width="160" height="16" rx="6" fill="#e8d5a3"/>
+            <rect x="106" y="255" width="148" height="10" rx="3" fill="#fef3c7"/>
+            <rect x="100" y="261" width="160" height="12" rx="6" fill="#e8d5a3"/>
+            <!-- Decorative noren cloth top -->
+            <rect x="0" y="0" width="360" height="30" fill="#1a1612"/>
+            <rect x="20" y="0" width="30" height="50" rx="0 0 4 4" fill="#1a1612"/>
+            <rect x="70" y="0" width="30" height="45" rx="0 0 4 4" fill="#1a1612"/>
+            <rect x="120" y="0" width="30" height="52" rx="0 0 4 4" fill="#1a1612"/>
+            <rect x="170" y="0" width="30" height="48" rx="0 0 4 4" fill="#1a1612"/>
+            <rect x="220" y="0" width="30" height="44" rx="0 0 4 4" fill="#1a1612"/>
+            <rect x="270" y="0" width="30" height="50" rx="0 0 4 4" fill="#1a1612"/>
+            <rect x="320" y="0" width="30" height="46" rx="0 0 4 4" fill="#1a1612"/>
+            <!-- Gold kanji on noren -->
+            <text x="180" y="22" font-family="serif" font-size="14" fill="#c9a84c" text-anchor="middle" letter-spacing="8">たまご</text>
+            <!-- Floating steam from sandwich -->
+            <path d="M148 245 Q150 238 148 231" stroke="#d4cfc5" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+            <path d="M180 243 Q182 234 180 226" stroke="#d4cfc5" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+            <path d="M212 245 Q214 237 212 230" stroke="#d4cfc5" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="about-img-caption">
+        Cassandra Cruda
+        <span>Founder & Head Chef</span>
+      </div>
+    </div>
+
+    <div class="about-right">
+      <p class="section-label reveal">About us</p>
+      <h2 class="section-title reveal">Born from a<br>team's idea.</h2>
+      <div class="about-body">
+        <p class="reveal">In 2025, <strong>Cassandra Cruda, Lyra De Castro, Nassleah Ismael, Vince Inovejas, and James Jordan</strong> and other Iqor students gather to brainstorm what kind sandwich will be selling and what brand name of the product. They came up with EggQor that is divided into two; "Egg", pertaining to the egg sandwich and "Qor" that means IQOR the section name. </p>
+        <p class="reveal">They spent one day testing 15 bread recipes, sourcing eggs from market, and calibrating boiling times down to the second. <strong>EggQor opened in 2026</strong> in a small corner of gymnasium court at Biñan Integrated National High School, no reservations, and a single item on the menu.</p>
+        <p class="reveal">The bread was cut into half, forming a triangular
+          shape. The stuffing for the bread includes the following that was later on mixed: boiled eggs, mayonnaise,
+          and a pinch of salt & pepper. After the filling was stuffed with bread, it is now topped with parsley.</p>
+        <p class="reveal">Today, we still make every sandwich toasted in a savory butter toasted. We still run out by noon. We still believe that <strong>the most meaningful things are simple ones, made with care.</strong></p>
+      </div>
+
+      <div class="about-stats reveal">
+        <div class="about-stat">
+          <div class="about-stat-num">15<em>+</em></div>
+          <div class="about-stat-label">Recipes tested</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">7<em>m</em></div>
+          <div class="about-stat-label">Perfect boil time</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">∞</div>
+          <div class="about-stat-label">Sandwiches served</div>
+        </div>
+      </div>
+
+      <div class="about-values reveal">
+        <div class="about-value">
+          <div class="about-value-icon">一</div>
+          <div class="about-value-text">
+            <h4>Freshness Above All</h4>
+            <p>Every ingredient arrives the morning it is used. Butter Bread baked at 7am. Eggs delivered by 6am. Doors open at 10am.</p>
+          </div>
+        </div>
+        <div class="about-value">
+          <div class="about-value-icon">二</div>
+          <div class="about-value-text">
+            <h4>No Shortcuts, Ever</h4>
+            <p>We peel every egg by hand. We never pre-make. When we run out, we close. Quality does not negotiate with convenience.</p>
+          </div>
+        </div>
+        <div class="about-value">
+          <div class="about-value-icon">三</div>
+          <div class="about-value-text">
+            <h4>Rooted in Tradition</h4>
+            <p>Our recipes honour the spirit of Japanese kissaten culture — the neighborhood café where simplicity and craftsmanship share a table.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <h2>EGG<em>QOR</em></h2>
+      <p>A small shop dedicated to one thing: the perfect Japanese-style egg sandwich. Made with love and precision.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="#">Biñan, Laguna</a></li>
+        <li><a href="#">Mon–Sat, 10–5pm</a></li>
+        <li><a href="#">Until sold out</a></li>
+        <li><a href="#">+63 9379-164-1008</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Twitter / X</a></li>
+        <li><a href="#">Press Inquiries</a></li>
+        <li><a href="#">Wholesale</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">
+    <p>© 2026 EggQor Co. — All rights reserved.</p>
+    <p>手作り · 毎朝新鮮 · たまごサンド</p>
+  </div>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animCursor() {
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animCursor);
+    }
+    animCursor();
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Add to cart feedback
+    document.querySelectorAll('.btn-add').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const orig = this.textContent;
+        this.textContent = '✓';
+        this.style.background = 'var(--moss)';
+        this.style.color = 'white';
+        this.style.borderColor = 'var(--moss)';
+        setTimeout(() => {
+          this.textContent = orig;
+          this.style.background = '';
+          this.style.color = '';
+          this.style.borderColor = '';
+        }, 1200);
+      });
+    });
+  </script>
+</body>
+</html>
